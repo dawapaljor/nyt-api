@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro"
+
+//const API_KEY ='G3FQ0m8ApTk9eSZnSCHvXJwd6Al2AkBN';
+//const category = 'arts';  
+
+const title = `News Blog`;
+
+
+const response = await fetch("http://lamyi9.com/wp-json/wp/v2/posts");
+const posts = await response.json();
+
+---
+<BaseLayout title={title}>
+	
+	<div class="max-w-screen-2xl mt-20 flex flex-col  p-5 mx-auto border-b-4 border-rose-600">
+		<h2 class="text-3xl font-semibold">{title}</h2>
+	</div>
+	<div class="p-10 grid grid-col-2 sm:grid-col-1 md:grid-cols-3 lg:grid-col-4  ">
+       
+        {
+            posts.map((post) => (
+            <div class="bg-slate-200 m-2 p-3 rounded-md">
+                <h2  class="text-2xl text-red-600">{post.title.rendered}</h2>
+                <p  class="text-md text-red-300"> {post.date.rendered} </p>
+                <p  class="text-md">{post.excerpt.rendered}</p>
+                {/* <img src={post.featuredImage[0].mediaItemUrl}  alt={post.title.rendered} class="w-full"/> */}
+                
+            </div>
+            ))
+          }
+       
+	  </div>
+
+</BaseLayout>

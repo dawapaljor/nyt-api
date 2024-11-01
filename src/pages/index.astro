@@ -16,27 +16,26 @@ interface responseDate{
 }
 ---
 <BaseLayout title={title}>
-	<h1>News Feed</h1>
-	<div class="max-w-screen-2xl mt-20 flex flex-col  p-5 mx-auto border-b-4 border-blue-600">
+	
+	<div class="max-w-screen-2xl mt-20 flex flex-col  p-5 mx-auto border-b-4 border-rose-600">
 		<h2 class="text-3xl font-semibold">{title}</h2>
 	</div>
 	<div class="p-10 grid grid-col-2 sm:grid-col-1 md:grid-cols-3 lg:grid-col-4  ">
 	
 	{articles.results.map((article: responseDate) => (
 		
-		<div class="flex flex-col p-5">
-			<div class="w-full overflow-hidden max-h-96 relative rounded-xl" >
+		<div class="group flex flex-col p-5  m-5 rounded-xl  justify-top border-2 border-rose-600 border-dashed font-jersey">
+			<div class=" w-full overflow-hidden max-h-96 h-64 relative rounded-xl" >
 				{article.multimedia.length > 0 && (
-          		<img src={article.multimedia[0].url} alt={article.title} class="object-cover"/>
+          		<img src={article.multimedia[0].url} alt={article.title} class="object-cover group-hover:scale-110 transition-transform"/>
 				<p class="bg-black/20 backdrop-blur-sm text-sm italic text-slate-100 absolute bottom-3 p-2">{article.multimedia[0].caption}</p>
         	)}
 			</div>
 			<div>
-				<h2 class="text-blue-600 font-bold text-2xl pt-2"><a href={article.url}>{article.title}</a></h2>
+				<h2 class="text-rose-700 font-bold text-2xl pt-2 group-hover:text-rose-500 font-jersey"><a href={article.url}>{article.title}</a></h2>
 				<p class="text-sm italic text-slate-400 py-2">Authored by : {article.byline} in <span>{new Date(article.published_date).toLocaleDateString()}</span></p>
 				<p class="text-slate-600 pb-5">{article.abstract}</p>
-				  
-				<a href={article.url} target="_blank" class="p-2   text-slate-500 rounded-md uppercase font-bold">Read more </a>
+				<a href={article.url} target="_blank" class="p-2   text-rose-400 rounded-md uppercase font-bold">Read more </a>
 			</div>
 		</div>
 	  ))}
