@@ -1,15 +1,14 @@
 ---
-// Component imports and setup JavaScript go here!
-import BaseHead from '../components/BaseHead.astro'
-const {title} = Astro.props;
+import BaseHead from "../components/baseHead.astro"
+import Navbar from "../components/Navbar.astro"
+
+const {title} = Astro.props
 ---
-
-<html lang="en">
-	<head>
-		<BaseHead title={title} />
-	</head>
-
+<BaseHead title={title}/>
 	<body>
-		<slot />
+<Navbar></Navbar>
+		<div class="max-w-screen-2xl mx-auto flex flex-col">
+			<slot></slot>
+		</div>
 	</body>
 </html>

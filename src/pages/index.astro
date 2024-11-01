@@ -1,26 +1,45 @@
 ---
-// Component imports and setup JavaScript go here!
-import BaseLayout from '../layouts/BaseLayout.astro'
+import BaseLayout from "../layouts/BaseLayout.astro"
 
-const title = "Testing Title from fences"
----
-
-<style lang="scss" scoped>
-div {
- h1 {
-    color: blue;
-  }
+const API_KEY ='G3FQ0m8ApTk9eSZnSCHvXJwd6Al2AkBN';
+const category = 'arts';  
+const response = await fetch(`https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${API_KEY}`);
+const articles = await response.json();
+const title = `Latest ${category} News - The New York Times`;
+interface responseDate{
+	title: string
+	url: string
+	multimedia: string
+	byline: string
+	published_date: string
+	abstract: string
 }
-</style>
-
+---
 <BaseLayout title={title}>
-  <div>
-    <h1>Welcome to <a href="https://astro.build/">Astro</a></h1>
-    <p>Hey I'm using a layout</p>
-  </div>
-  <h1>Testing another Heading</h1>
-  <a href="/contact">Contact</a>
+	<h1>News Feed</h1>
+	<div class="max-w-screen-2xl mt-20 flex flex-col  p-5 mx-auto border-b-4 border-blue-600">
+		<h2 class="text-3xl font-semibold">{title}</h2>
+	</div>
+	<div class="p-10 grid grid-col-2 sm:grid-col-1 md:grid-cols-3 lg:grid-col-4  ">
+	
+	{articles.results.map((article: responseDate) => (
+		
+		<div class="flex flex-col p-5">
+			<div class="w-full overflow-hidden max-h-96 relative rounded-xl" >
+				{article.multimedia.length > 0 && (
+          		<img src={article.multimedia[0].url} alt={article.title} class="object-cover"/>
+				<p class="bg-black/20 backdrop-blur-sm text-sm italic text-slate-100 absolute bottom-3 p-2">{article.multimedia[0].caption}</p>
+        	)}
+			</div>
+			<div>
+				<h2 class="text-blue-600 font-bold text-2xl pt-2"><a href={article.url}>{article.title}</a></h2>
+				<p class="text-sm italic text-slate-400 py-2">Authored by : {article.byline} in <span>{new Date(article.published_date).toLocaleDateString()}</span></p>
+				<p class="text-slate-600 pb-5">{article.abstract}</p>
+				  
+				<a href={article.url} target="_blank" class="p-2   text-slate-500 rounded-md uppercase font-bold">Read more </a>
+			</div>
+		</div>
+	  ))}
+	  </div>
+
 </BaseLayout>
-
-
-
